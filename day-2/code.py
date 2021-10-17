@@ -4,12 +4,8 @@ def getInput(filename) -> list:
     with open(filename) as input:
          return [str(x) for x in input.readlines()]
 
-def test():
-    test_input = getInput("test_input.txt")
-    assert part1(test_input) == 2
-    assert part2(test_input) == 1
-
 def parse_line(line: str) -> Tuple[int, int, str, str]:
+    # "1-3 b: cdefg" -> 1, 3, "b", "cdefg"
     line = line.strip().split()
     first, second = map(int, [num for num in line[0].split("-")])
     letter = line[1][0]
@@ -30,8 +26,13 @@ def part2(input:list) -> int:
         first, second, letter, pw = parse_line(line)
         ## XOR -> if letter is present in exactly one of the two positions, increment counter
         if (pw[first - 1] == letter) != (pw[second - 1] == letter):
-            count = count + 1
+            count += 1
     return count
+
+def test():
+    test_input = getInput("test_input.txt")
+    assert part1(test_input) == 2
+    assert part2(test_input) == 1
 
 if __name__ == "__main__":
     test()
