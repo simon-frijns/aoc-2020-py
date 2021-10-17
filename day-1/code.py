@@ -11,15 +11,20 @@ def part1(input: list) -> int:
             answer = a * b
     return answer    
 
+def part2(input: list) -> int:
+    answer = 0
+    for a,b,c in combinations(input, 3):
+        if a + b + c == 2020:
+            answer = a * b * c
+    return answer  
+
 def test():
     test_input = getInput("test_input.txt")
-    try: 
-        assert part1(test_input) == 514579
-    except AssertionError:
-        print("part1 failed")
-        raise
+    assert part1(test_input) == 514579
+    assert part2(test_input) == 241861950
 
 if __name__ == "__main__":
     test()
     input = getInput("input.txt")
     print(part1(input))
+    print(part2(input))
