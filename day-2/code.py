@@ -1,3 +1,5 @@
+from typing import Tuple
+
 def getInput(filename) -> list:
     with open(filename) as input:
          return [str(x) for x in input.readlines()]
@@ -5,21 +7,34 @@ def getInput(filename) -> list:
 def test():
     test_input = getInput("test_input.txt")
     assert part1(test_input) == 2
+    assert part2(test_input) == 1
+
+def parse_line(line: str) -> Tuple[int, int, str, str]:
+    line = line.strip().split()
+    first, second = map(int, [num for num in line[0].split("-")])
+    letter = line[1][0]
+    pw = line[2]
+    return first, second, letter, pw
 
 def part1(input: list) -> int:
     count = 0
     for line in input:
-        line = line.strip().split()
-        lower_bound, upper_bound = map(int, [num for num in line[0].split("-")])
-        letter = line[1][0]
-        pw = line[2]
-    
+        lower_bound, upper_bound, letter, pw = parse_line(line)    
         if lower_bound <= pw.count(letter) <= upper_bound:
-            count = count + 1
+            count += 1
+    return count
 
+def part2(input:list) -> int:
+    count = 0
+    for line in input:
+        first, second, letter, pw = parse_line(line)
+        ## XOR -> if letter is present in exactly one of the two positions, increment counter
+        if (pw[first - 1] == letter) != (pw[second - 1] == letter):
+            count = count + 1
     return count
 
 if __name__ == "__main__":
     test()
     input = getInput("input.txt")
     print(part1(input))
+    print(part2(input))
