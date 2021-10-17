@@ -1,30 +1,21 @@
 from itertools import combinations
+from math import prod 
 
 def getInput(filename) -> list:
     with open(filename) as input:
         return [int(x) for x in input.readlines()]
 
-def part1(input: list) -> int:
-    answer = 0
-    for a,b in combinations(input, 2):
-        if a + b == 2020:
-            answer = a * b
-    return answer    
-
-def part2(input: list) -> int:
-    answer = 0
-    for a,b,c in combinations(input, 3):
-        if a + b + c == 2020:
-            answer = a * b * c
-    return answer  
+def solution(input: list, nmb_of_inputs: int) -> int:
+    # look for combinations of nmb_of_inputs that sum to 2020, then return their product
+    return [prod(combination) for combination in combinations(input, nmb_of_inputs) if sum(combination) == 2020][0]
 
 def test():
     test_input = getInput("test_input.txt")
-    assert part1(test_input) == 514579
-    assert part2(test_input) == 241861950
+    assert solution(test_input, 2) == 514579
+    assert solution(test_input, 3) == 241861950
 
 if __name__ == "__main__":
     test()
     input = getInput("input.txt")
-    print(part1(input))
-    print(part2(input))
+    print(solution(input, 2))
+    print(solution(input, 3))
