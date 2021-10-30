@@ -1,5 +1,3 @@
-import re
-
 def get_input(filename) -> list:
     with open(filename) as input:
         return input.read().strip().split("\n\n")
